@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Config;
 
 class JSRouter
 {
@@ -12,11 +13,11 @@ class JSRouter
 
 		foreach ($router as $route) {
 			if ($route->getActionName() != 'Closure') {
-				$routesByAction[$route->getActionName()]['route'] = str_replace('?}', '}', url($route->getPath()));
+				$routesByAction[$route->getActionName()]['route'] = str_replace('?}', '}', Config::get('app.url') . url($route->getPath());
 				$routesByAction[$route->getActionName()]['parameters'] = $route->parameterNames();
 			}
 			if ($route->getName() != '') {
-				$routesByName[$route->getName()]['route'] = str_replace('?}', '}', url($route->getPath()));
+				$routesByName[$route->getName()]['route'] = str_replace('?}', '}', Config::get('app.url') . url($route->getPath());
 				$routesByName[$route->getName()]['parameters'] = $route->parameterNames();
 			}
 		}
